@@ -1,0 +1,49 @@
+Soal Tambahan :
+1) Bagaimana cara menggunakan API untuk mengimplementasikan validasi input pada formulir atau fitur input yang ada di online shop? Sebutkan setidaknya dua jenis validasi yang akan diterapkan dan cara melakukannya.
+
+Menggunakan API  untuk mengimplementasikan validasi input pada formular atau fitur input di online shop dapat membantu memastikan data yang di masukkan pengguna sesuai dengan aturan dan kriteria yang ditetapkan.
+
+Jenis Validasi yang diterapkan :
+	A. Validasi Input
+		=> Proses memastikan bahwa data yang dimasukkan oleh pengguna ke dalam sistem sesuai dengan aturan atau kriteria yang telah ditetapkan.
+
+	B. Langkah => 
+		1. Buat Model dan Migration untuk Validasi
+		2. Implementasi Validasi di Controller atau Service
+		3. Tangani Error dan Berikan Umpan Balik
+		4. Uji Coba dan Debugging
+
+2) Jelaskan implementasi mekanisme autentikasi pengguna dalam proyek online shop menggunakan API. Apa saja informasi yang akan disimpan terkait akun pengguna, dan bagaimana memastikan keamanan autentikasi?
+
+	Autentikasi adalah proses verifikasi idetitas pengguna, aplikasi atau entitas lainnya sebelum memberikan akses ke sistem, aplikasi, atau data tertentu untuk memastikan pihak yang mengakses sistem adalah siapa yang mereka klaim. Implementasi mekanisme autentikasi perpengguna dalam proyek menggunakan API adalah proses memastikan bahwa hanya pengguna yang memiliki krudensial yang benar (email dan password) yang dapat mengakses atau berinteraksi dengan database itu. Autentikasi yang berbasis API umumnya menggunakan token-based authentication. alah satu contoh nya menggunakan Laravel Sanctum. 
+
+Langkah-langkah implementasinya yaitu;
+
+	1. Install Sanctum -> Konfigurasi Sanctum -> Migrasi table token
+	2. Buat AuthController (untuk menaruh kode perintah validasi dan sebagainya dari autentikasi) dari terminal
+	3. buat function untuk "register", "login", dan "logout"
+		a. "register" berisikan -> validasi untuk data input (nama | email | password yang dikonfirmasi)
+				   	   membuat suatu akun user dengan isi dan kententuan di atas
+				   	   membuat token => return respon bahwa berhasil dan isi token
+		b. "login" berisikan -> validasi data untuk input (email | password)
+					mencari user berdasarkan email
+					mengecek apakah password sesuai dengan database -> jika tidak respon=> krudensial tidak valid
+						jika valid => token terbuat
+					mengembalikan respon sukses dan token baru
+		c. "logout" berisikan -> menghapus token yang sedang aktif digunakan
+				 	 return respon sukses
+	4. Menambahkan rute dengan middleware -> Interaksi apa saja yang harus menggunakan token
+				
+3) Bagaimana merencanakan penggunaan API untuk mengintegrasikan fungsi sorting dan searching pada online shop? Jelaskan langkah-langkah atau algoritma yang akan diterapkan. Selain itu, bagaimana memastikan bahwa semua operasi CRUD (Create, Read, Update, Delete) berjalan dengan lancar dan aman?
+
+A. Dengan Menambahkan parameter sort dan orderBy | menambahkan where(.....kode untuk mencari sesuatu sesuai yang di tentukan) lalu mengisi parameter query.
+ -> menggunakan fitur bawaan dari ORM seperti Eloquent di Laravel | Product::orderBy($sort, $order)->paginate($page); | memanfaatkan query database yang efisien untuk mengurutkan data sesuai parameter yang diberikan
+ -> Memanfaatkan fitur bawaan dari ORM atau query builder |Product::where('name', 'like', '%' . $query . '%')| Query like digunakan untuk mencari produk yang Namanya mengandung kata kunci yang diberikan.
+
+B. 	-> membuat model yang sudah dihubungkan dengan relasi yang tepat
+	-> Membuat Controller untuk mengelola request
+	-> Pastikan validasi input pada API
+	-> Jalankan di terminal dengan | php artisan serve|
+	-> uji coba pada postman dengan ketik |server -> lalu perintah yang sudah di buat| -> seperti list product |server/product| sesuaikan perintah seperti GET, PUT dengan kebutuhan yang akan di lakukan
+
+Link -> https://documenter.getpostman.com/view/34794418/2sAXjJ6YSN
